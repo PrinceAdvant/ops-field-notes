@@ -1,0 +1,14 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hosting a static docs site without Netlify build minutes anxiety</title><meta name="description" content="Options for documentation and marketing static sites when Netlify limits or pricing push you toward GitHub Pages, object storage plus CDN, or a tiny VPS."><link rel="canonical" href="https://princeadvant.github.io/ops-field-notes/hosting-a-static-docs-site-without-netlify-build-minutes-anxiety/"><style>body{max-width:720px;margin:2rem auto;padding:0 1rem;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.65;color:#1f2328}pre{background:#f6f8fa;padding:1rem;overflow:auto;border-radius:6px}code{background:#f6f8fa;padding:.1rem .3rem;border-radius:4px}table{border-collapse:collapse}td,th{border:1px solid #d0d7de;padding:.4rem .6rem}a{color:#0969da}header a{color:#1f2328;text-decoration:none;font-weight:600}footer{margin-top:3rem;font-size:.9rem;color:#57606a}</style></head><body><header><a href="https://princeadvant.github.io/ops-field-notes/">Ops Field Notes</a></header><main><article><h1>Hosting a static docs site without Netlify build minutes anxiety</h1><p>Static site hosts compete on build minutes, bandwidth and form/feature addons. If your docs site is a Hugo or VitePress build that changes a few times a week, you can often leave Netlify without losing quality.</p>
+<h2>Cheap reliable patterns</h2>
+<ul>
+<li>GitHub Pages or GitLab Pages for public docs with Actions/CI doing the build.</li>
+<li>Object storage (S3, R2, B2) plus a CDN for high bandwidth and custom domains.</li>
+<li>A 1 GB VPS with Caddy serving <code>./public</code> if you already operate servers and want one place for TLS.</li>
+</ul>
+<h2>What you give up</h2>
+<p>Netlify identity, split testing and some form handling go away unless you replace them. For docs, that is usually fine. For marketing landing pages with A/B tests, budget replacements before cutting over.</p>
+<h2>Cutover checklist</h2>
+<p>Build in CI, upload artifacts, enable HTTPS, set redirects for old paths, then flip DNS. Keep the Netlify site read-only for a week in case you missed a redirect.</p>
+<p>Watch cache headers after the move; a missing <code>Cache-Control</code> on hashed assets shows up as bandwidth bills, not as a broken page.</p>
+<p>More options are compared in this <a href="https://peon.sh/blogs/netlify-alternative-static-sites">Netlify alternative for static sites</a> guide.</p>
+<p>Disclosure: I work on <a href="https://peon.sh/">Peon</a>, an open-source self-hosted deployment platform.</p></article></main><footer>Practical notes on Docker, VPS hosting and self-hosted PaaS trade-offs.</footer></body></html>
